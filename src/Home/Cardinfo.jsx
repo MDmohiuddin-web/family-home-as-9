@@ -6,7 +6,7 @@ const Cardinfo = () => {
 
   const { id } = useParams();
   const datas = info.find((datas) => datas.id == id);
-  console.log(info);
+  // console.log(info);
 
   const {
     description,

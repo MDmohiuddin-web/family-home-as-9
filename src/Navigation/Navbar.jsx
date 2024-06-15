@@ -1,6 +1,5 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import UseAuth from "../HOOK/UseAuth";
-
 
 const Navbar = () => {
   const { user, logout } = UseAuth();
@@ -9,31 +8,37 @@ const Navbar = () => {
       <li className="hover:text-my_color-400">
         <NavLink to="/">Home </NavLink>
       </li>
-      <li className="hover:text-my_color-400">
-        <NavLink to="/login">Log in</NavLink>
-      </li>
-      <li className="hover:text-my_color-400">
+
+      {/* <li className="hover:text-my_color-400">
         <NavLink to="/signup">sign up</NavLink>
-      </li>
+      </li> */}
       {/* <li className="hover:text-my_color-400">
         <NavLink to="/Profile">Profile</NavLink>
       </li> */}
 
-      {user && (
+      {user?.email ? (
         <>
           <li className="hover:text-my_color-400">
             <NavLink to="/Profile">Profile</NavLink>
           </li>
-          {/* <li className="hover:text-my_color-400">
-            <NavLink to="/info">details</NavLink>
-          </li> */}
+          <li className="hover:text-my_color-400">
+            <NavLink to="/details">About</NavLink>
+          </li>
         </>
+      ) : (
+        <li className="hover:text-my_color-400">
+          <NavLink to="/login">Log in</NavLink>
+        </li>
       )}
     </>
   );
 
+  const navigate = useNavigate();
+
   const handellogout = () => {
-    logout();
+    logout().then(() => {
+      navigate("/");
+    });
   };
   return (
     <>
@@ -68,8 +73,11 @@ const Navbar = () => {
                 {links}
               </ul>
             </div>
-            <Link to="/" className="btn btn-ghost text-xl md:text-4xl hover:text-my_color-400">
-            Family <span className="text-my_color-400"> Home</span>
+            <Link
+              to="/"
+              className="btn btn-ghost text-xl md:text-4xl hover:text-my_color-400"
+            >
+              Family <span className="text-my_color-400"> Home</span>
             </Link>
           </div>
           <div className="navbar-center hidden lg:flex">
@@ -82,7 +90,10 @@ const Navbar = () => {
                   <div className="w-10 rounded-full">
                     <img
                       title={user?.displayName}
-                      src={user?.photoURL || 'https://source.unsplash.com/150x150/?portrait?3'}
+                      src={
+                        user?.photoURL ||
+                        "https://source.unsplash.com/150x150/?portrait?3"
+                      }
                     />
                   </div>
                 </label>

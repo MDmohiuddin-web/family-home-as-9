@@ -13,9 +13,12 @@ const Root = () => {
   }, []);
 
   return (
-    <div data-aos="fade-down" className="capitalize w-[90%] m-auto font-ROboto">
-      <Navbar></Navbar>
+    <div data-aos="fade-down" >
+      <div className="capitalize w-[90%] m-auto font-ROboto">
+        <Navbar></Navbar>
       <Outlet></Outlet>
+      </div>
+      
       <Footer></Footer>
       <ToastContainer
         position="top-center"

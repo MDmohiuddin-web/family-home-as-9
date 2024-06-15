@@ -17,22 +17,21 @@ const Signup = () => {
   } = useForm();
   // Navigation systems
   const navigate = useNavigate();
-  const from = "/";
+
   const location = useLocation();
 
   const onSubmit = (data) => {
     const { email, password, photoURL, name } = data;
+    // console.log(data.password);
 
     // Create user and update profile
     signup(email, password)
-      .then((result) => {
-        if (result) {
-          toast.success("Signup process successful");
-          updateUserProfile(name, photoURL).then(() => {
-            navigate(from);
-            navigate(location.formState);
-          });
-        }
+      .then(() => {
+        toast.success("Signup process successful");
+
+        updateUserProfile(name, photoURL).then(() => {
+          navigate(location.state || "/");
+        });
       })
       .catch((error) => {
         if (error) {
@@ -42,7 +41,18 @@ const Signup = () => {
   };
 
   const google = () => {
-    googleLogin();
+    googleLogin()
+      .then((result) => {
+        if (result) {
+          toast.success("signInWithGoogle successful");
+          navigate(location?.state || "/");
+        }
+      })
+      .catch((error) => {
+        if (error) {
+          toast.error("signInWithGoogle failed");
+        }
+      });
   };
 
   useEffect(() => {
@@ -187,7 +197,7 @@ const Signup = () => {
             to="/login"
             rel="noopener noreferrer"
             href="#"
-            className="underline pl-2 text-red-600 dark:text-gray-800"
+            className="underline pl-2 text-red-600 "
           >
             log in
           </Link>

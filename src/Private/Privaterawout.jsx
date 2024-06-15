@@ -4,10 +4,10 @@ import { AuthContext } from "../Firebase/AuthProvider";
 import PropTypes from "prop-types";
 
 const Privaterawout = ({ children }) => {
-  console.log(children);
+  // console.log(children);
   const { user } = useContext(AuthContext);
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
 
   // if (loding) {
   //   return (

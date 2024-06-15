@@ -36,13 +36,8 @@ const AuthProvider = ({ children }) => {
   const googleLogin = () => {
     setloding(true);
     // toast.success('signInWithGoogle success full')
-    signInWithPopup(auth, googleloginprovider)
-      .then((result) => {
-        result && toast.success("signInWithGoogle success full");
-      })
-      .catch((error) => {
-        error && toast.error("signInWithGoogle Process Field");
-      });
+   return signInWithPopup(auth, googleloginprovider)
+     
   };
   // update user profile
   const updateUserProfile = (name, image) => {

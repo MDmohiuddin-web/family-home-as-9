@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import UseAuth from "../HOOK/UseAuth";
 import Aos from "aos";
@@ -9,7 +9,10 @@ import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { login, googleLogin } = UseAuth();
-  // console.log(login)
+  const navigate = useNavigate();
+  const location=useLocation();
+
+  // console.log(location.pathname)
   //
   
   const {
@@ -24,6 +27,7 @@ const Login = () => {
       .then((result) => {
        
         result && toast.success("signIn Process success full");
+        navigate("/" || location?.state);
       })
       .catch((error) => {
         error && toast.error("signIn Process Field");
@@ -35,9 +39,20 @@ const Login = () => {
   //
   //google login
   const google = () => {
-  
-    googleLogin();
+    googleLogin()
+      .then(() => {
+        
+          toast.success("signInWithGoogle successful");
+          navigate(location?.state || "/");
+        
+      })
+      .catch((error) => {
+        if (error) {
+          toast.error("signInWithGoogle failed");
+        }
+      });
   };
+  
   useEffect(() => {
     Aos.init();
   }, []);
@@ -153,7 +168,7 @@ const Login = () => {
           to="/signup"
           rel="noopener noreferrer"
           href="#"
-          className="underline pl-2 text-red-600 dark:text-gray-800"
+          className="underline pl-2 text-red-500 "
         >
           sign up
         </Link>

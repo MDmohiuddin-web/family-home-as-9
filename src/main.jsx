@@ -12,15 +12,9 @@ import AuthProvider from "./Firebase/AuthProvider";
 import Profile from "./User_Authontication/Profile";
 import Privaterawout from "./Private/Privaterawout";
 import Cards from "./Home/Cards";
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from "react-helmet-async";
 import Cardinfo from "./Home/Cardinfo";
-
-
-
-
-
-
-
+import Details from "./Navigation/details/Details";
 
 const router = createBrowserRouter([
   {
@@ -63,16 +57,19 @@ const router = createBrowserRouter([
           </Privaterawout>
         ),
       },
+      {
+        path: "/details",
+        element: <Details></Details>,
+      },
     ],
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
- 
     <AuthProvider>
-    <HelmetProvider><RouterProvider router={router} /></HelmetProvider>
-      
+      <HelmetProvider>
+        <RouterProvider router={router} />
+      </HelmetProvider>
     </AuthProvider>
-   
   </React.StrictMode>
 );

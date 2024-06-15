@@ -9,6 +9,7 @@ import { Helmet } from "react-helmet-async";
 const Profile = () => {
   const { user, updateUserProfile } = UseAuth();
   //   console.log(user);
+
   const {
     register,
     handleSubmit,
@@ -17,8 +18,17 @@ const Profile = () => {
   } = useForm();
   const onSubmit = (data) => {
     const { photoURL, name } = data;
-    toast.success("profile updated");
-    updateUserProfile(name, photoURL);
+    
+    updateUserProfile(name, photoURL)
+      .then(() => {
+        // console.log(result)
+        toast.success("profile updated")
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error)
+        toast.warning("profile update failed");
+      });
   };
 
   //aos
@@ -56,6 +66,7 @@ const Profile = () => {
                   <input
                     type="text"
                     name="name"
+                    defaultValue={user?.displayName}
                     placeholder="Enter Name"
                     {...register("name", { required: true })}
                     className="w-full px-4 py-3 rounded-md border-gray-700 dark:border-gray-300 bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800 focus:border-my_color-400 focus:dark:border-my_color-600"
@@ -73,6 +84,7 @@ const Profile = () => {
                     type="text"
                     name="photoURL"
                     placeholder="Image Url"
+                    defaultValue={user?.photoURL}
                     {...register("photoURL", { required: true })}
                     className="w-full px-4 py-3 rounded-md border-gray-700 dark:border-gray-300 bg-gray-900 dark:bg-gray-50 text-gray-100 dark:text-gray-800 focus:border-my_color-400 focus:dark:border-my_color-600"
                   />
